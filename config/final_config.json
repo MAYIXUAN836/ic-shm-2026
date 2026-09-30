@@ -1,0 +1,62 @@
+{
+  "system_name": "final",
+  "classes_version": "classes_v1",
+  "categories": [
+    "crack",
+    "void",
+    "spalling",
+    "corrosion",
+    "exposed_rebar",
+    "honeycomb",
+    "looseness",
+    "pothole",
+    "efflorescence"
+  ],
+  "base_models": {
+    "stage1": "models/base/Qwen3.5-9B",
+    "experts": "models/base/Qwen3_VL_8B_Instruct"
+  },
+  "adapters": {
+    "stage1": "models/adapters/stage1_UNIFORM_V1/final_adapter",
+    "expert_a": "models/adapters/expert_a_v010_validated",
+    "expert_b_v07": "models/adapters/expert_b_v07_validated",
+    "expert_b_v08": "models/adapters/expert_b_v08_validated"
+  },
+  "routing": {
+    "expert_a_categories": [
+      "spalling",
+      "void",
+      "pothole",
+      "honeycomb",
+      "looseness"
+    ],
+    "expert_b_categories": [
+      "crack",
+      "corrosion",
+      "exposed_rebar",
+      "efflorescence"
+    ],
+    "expert_b_routes": {
+      "exact_crack": "expert_b_v07_validated",
+      "exact_exposed_rebar": "expert_b_v07_validated",
+      "other_nonempty_b_categories": "expert_b_v08_validated"
+    }
+  },
+  "generation": {
+    "stage1_max_image_side": 768,
+    "stage1_max_new_tokens": 96,
+    "expert_max_new_tokens": 180,
+    "batch_size": 4
+  },
+  "merge": {
+    "neutral_extent": true,
+    "normal_description": "No visible structural damage is observed in the image."
+  },
+  "source_provenance": {
+    "stage1": "UNIFORM_V1",
+    "expert_a": "V0.10 validated Expert A",
+    "expert_b": "V0.10 validated Expert B",
+    "routing_merge": "V0.10 stable pipeline",
+    "weight_combination": "separate adapters loaded on their respective base models; no weight addition or fusion"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "models/adapters/expert_a_v010_validated/adapter_config.json": "aeee7c09b0ed71625497e0468b40ed327144d2b42e92ba51e4641eec361d4d41",
+  "models/adapters/expert_a_v010_validated/adapter_model.safetensors": "2786cfb1f4a314b8697388330cbcb9ec1905af8e340a8f0cc20796b13d1d2c05",
+  "models/adapters/expert_a_v010_validated/chat_template.jinja": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4",
+  "models/adapters/expert_a_v010_validated/processor_config.json": "974212f27dc24939460a2b779e043c82ffc84da7b6d85288bf59b74f4917d62b",
+  "models/adapters/expert_a_v010_validated/tokenizer.json": "31110386145fd5016e6b0c0ff0f156404e1f08fb9cac513064e02c9eb8c38728",
+  "models/adapters/expert_a_v010_validated/tokenizer_config.json": "909acc21cd50d29f9a294195a33eac12afada59a7b3ff76fbce40fd71caa4ee9",
+  "models/adapters/expert_b_v07_validated/adapter_config.json": "a57ece5df7e36cff11d9e41db0f58365b3a07790bf162b77927092ae073ef425",
+  "models/adapters/expert_b_v07_validated/adapter_model.safetensors": "0035d45f253b4065bab464a6f75e273dc4595da2bf9ceb62a028027e5f8bc5d1",
+  "models/adapters/expert_b_v07_validated/chat_template.jinja": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4",
+  "models/adapters/expert_b_v07_validated/processor_config.json": "974212f27dc24939460a2b779e043c82ffc84da7b6d85288bf59b74f4917d62b",
+  "models/adapters/expert_b_v07_validated/tokenizer.json": "31110386145fd5016e6b0c0ff0f156404e1f08fb9cac513064e02c9eb8c38728",
+  "models/adapters/expert_b_v07_validated/tokenizer_config.json": "909acc21cd50d29f9a294195a33eac12afada59a7b3ff76fbce40fd71caa4ee9",
+  "models/adapters/expert_b_v08_validated/adapter_config.json": "13b5aaa03c74969e27df1e5aa7261c62c58602dbc712d74b1bca8b38c1579035",
+  "models/adapters/expert_b_v08_validated/adapter_model.safetensors": "e71262e038531193afb9054f0fd01cc4b26db423995aa4f585f84e30d2dc6708",
+  "models/adapters/expert_b_v08_validated/chat_template.jinja": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4",
+  "models/adapters/expert_b_v08_validated/processor_config.json": "974212f27dc24939460a2b779e043c82ffc84da7b6d85288bf59b74f4917d62b",
+  "models/adapters/expert_b_v08_validated/tokenizer.json": "31110386145fd5016e6b0c0ff0f156404e1f08fb9cac513064e02c9eb8c38728",
+  "models/adapters/expert_b_v08_validated/tokenizer_config.json": "909acc21cd50d29f9a294195a33eac12afada59a7b3ff76fbce40fd71caa4ee9",
+  "models/adapters/stage1_UNIFORM_V1/final_adapter/adapter_config.json": "20838d4ec884583f1b1175f894c12f1130ae948f604e0efb44e4a152bda7038f",
+  "models/adapters/stage1_UNIFORM_V1/final_adapter/adapter_model.safetensors": "395a9cc6d47a61f3f4ec3fdf08f2e6bfb12c1d195696820b66a0c6c76579cec2"
+}
