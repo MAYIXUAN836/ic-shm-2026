@@ -60,7 +60,7 @@ bash reproduce.sh run \
   --gpu 0
 ```
 
-This repository is private. Judges must be granted GitHub access, or receive the code ZIP directly. Extracting the ZIP gives the same layout and does not require Git.
+This repository is public. Judges can clone it without requesting access, or use the code ZIP directly. Extracting the ZIP gives the same layout and does not require Git.
 
 `setup` installs dependencies, downloads the pinned public base models and seven final-adapter bundle parts from the new Drive folder, verifies every archive hash, restores only the required adapter inference artifacts, and checks them. **It never starts training or inference.** `weights` and `datasets` also only download/verify/extract files. Only the explicit `run` action starts inference. If Python 3.12 has another executable name, set `PYTHON=/path/to/python3.12`.
 
