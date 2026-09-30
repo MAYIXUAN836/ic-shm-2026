@@ -1,0 +1,231 @@
+{
+  "drive_folder": "https://drive.google.com/drive/folders/1FBySNdU_pK20m_GQv7wGNjuMSgcNOT7i",
+  "weights_folder": "https://drive.google.com/drive/folders/1Z46YzLCyZ4amLWIys0eqZLnBVaTiRtEH",
+  "datasets_folder": "https://drive.google.com/drive/folders/17_JzGThDcx02Bp8NLHd3cfMivXOt5SFE",
+  "files": [
+    {
+      "name": "dataset_manifests.zip",
+      "id": "1yCwmILOWgh8GKOJNoXk_15n-CH5p3WZN",
+      "group": "datasets",
+      "size": 635040,
+      "sha256": "e091eedc0996adaccf0ada531ad41ee2de83c7a37274aea18e5d17360fc276a5"
+    },
+    {
+      "name": "ICSHM_DACL10K_used_part1_of_8.zip",
+      "id": "1gXqtvkvO3cP28tnJB5i7PrbWLJEiKflQ",
+      "group": "datasets",
+      "size": 48689933,
+      "sha256": "00d37a777d653ceb42857e1172c5f388c40fa3579209da7196492ad162e11813"
+    },
+    {
+      "name": "ICSHM_DACL10K_used_part2_of_8.zip",
+      "id": "1L_E7yBDRbsOQg-nBjZHfnD_nSyq3Sva-",
+      "group": "datasets",
+      "size": 40025130,
+      "sha256": "89a34bda6abcfac618803f92d49a2066932028cb5ea0f5a394f13f5d96f07250"
+    },
+    {
+      "name": "ICSHM_DACL10K_used_part3_of_8.zip",
+      "id": "1sRQ0EyDQKZrvDDnWCr_wYiRGuGgRnVxY",
+      "group": "datasets",
+      "size": 29823803,
+      "sha256": "44d3823490ea7bf6d9cc2fff852241b77ca4b0fbc86f8b81f8e74cf8a5188c3f"
+    },
+    {
+      "name": "ICSHM_DACL10K_used_part4_of_8.zip",
+      "id": "1drmFF_B75-pIqrtB-Q7uHB5-YPEqI6_i",
+      "group": "datasets",
+      "size": 33878938,
+      "sha256": "c96a1832171a8ee17f9a2f8795d1fa3e11063db20719a7b05479730078d37c11"
+    },
+    {
+      "name": "ICSHM_DACL10K_used_part5_of_8.zip",
+      "id": "108Udn2jLV963HReVpxQbEduK7-DDnggA",
+      "group": "datasets",
+      "size": 25609678,
+      "sha256": "ba14e06bba7af06364b1aeab31dd8627c1da6f5d9fb44630c9030e7494b93a28"
+    },
+    {
+      "name": "ICSHM_DACL10K_used_part6_of_8.zip",
+      "id": "18l7jidHGyBYxvZnPzv2965kVz906cM_h",
+      "group": "datasets",
+      "size": 30282939,
+      "sha256": "61bbaf7253d273d9246bda93187cfde36effbfe0118a557ffc4a2ebd76576319"
+    },
+    {
+      "name": "ICSHM_DACL10K_used_part7_of_8.zip",
+      "id": "16JUmWeipuNvuWkieeqFOg6dzkI-CQdMs",
+      "group": "datasets",
+      "size": 37310074,
+      "sha256": "63a72f9e46e0dd65cea2beff0a9363d79fbaa553008e33bf69fdad3bac2c3ff6"
+    },
+    {
+      "name": "ICSHM_DACL10K_used_part8_of_8.zip",
+      "id": "17j36fBqM2AkCABmoPAMklaR_fk6GRA45",
+      "group": "datasets",
+      "size": 48607437,
+      "sha256": "d3c39391dc13af73b353d0b0f7305c9edf3bd1d4eff402f17948cf7487f08e7e"
+    },
+    {
+      "name": "ICSHM_MCDS_used_train72_dev23.zip",
+      "id": "11-5cLbsnbSN1pjhQIrKN73iXhGJXv9eM",
+      "group": "datasets",
+      "size": 26303212,
+      "sha256": "bcace53b23605c6174fb1b0dfd5d439988d7eee9020e54577463404ddcda725f"
+    },
+    {
+      "name": "mcds_stage1_normal_train35.zip",
+      "id": "1lgjbYIn3cNM1FXsPKVRV3GBCgF-XPqu3",
+      "group": "datasets",
+      "size": 6090666,
+      "sha256": "334d6205ca76a9aee74c817cc805096092d747b9dba4ff48dab639f6a7a4fb25"
+    },
+    {
+      "name": "mcds_stage1_normal16.zip",
+      "id": "124R29izCX54lvOf16UtgTJmZAVY8hzcl",
+      "group": "datasets",
+      "size": 1977794,
+      "sha256": "4a8f5de9758dc000f5cbc14d1f1dcf79af2504e562822b6c7ac095d3e3703e2b"
+    },
+    {
+      "name": "normal54_images_part01_of_02.zip",
+      "id": "1-H7w9-sq0ZvGmQv1S821-irpAq5VrC9S",
+      "group": "datasets",
+      "size": 68722481,
+      "sha256": "506ded89619ce5cd299f3b2633a72d077670a1b39a5465b70d46e609ec4ae252"
+    },
+    {
+      "name": "normal54_images_part02_of_02.zip",
+      "id": "1x8E9MiOjbyEHtbs466I4s9Dx2v2xSQ9s",
+      "group": "datasets",
+      "size": 40082880,
+      "sha256": "3ff81062134e1bc5afa6c59694d40a14ba971a1f6ce6b089d080f1ca984e3a9d"
+    },
+    {
+      "name": "official110_inputs.zip",
+      "id": "18WyhnVCS5VR7tNvXlHsSc7-wwEfkm8JO",
+      "group": "datasets",
+      "size": 70447847,
+      "sha256": "e51e0633e6a0536517bdea7129a20f9ee75f93096fa0e63c1ef03939c8d21904"
+    },
+    {
+      "name": "organizer_updated1200_descriptions.zip",
+      "id": "1nfrvRiyUFngJ2gSUqFy4QjHexuoIgEKT",
+      "group": "datasets",
+      "size": 1311392,
+      "sha256": "55569b84c127a6c4c29847d1cf8a8e83a1b37a50b6cf1189099e3b16417e8c01"
+    },
+    {
+      "name": "organizer_updated1200_images_part01_of_09.zip",
+      "id": "11DtxeANM3CAep9BcGxvgD35qSxk7aXt-",
+      "group": "datasets",
+      "size": 70890501,
+      "sha256": "e76ceafd72b9640d83f7d7f614ffb7144c0819debd5682d21f9b2777d50f9346"
+    },
+    {
+      "name": "organizer_updated1200_images_part02_of_09.zip",
+      "id": "1t5568EkbYW5ftT8gDfoFWvI4sg-6PoMY",
+      "group": "datasets",
+      "size": 70379291,
+      "sha256": "455f61eb5861d9bb7b7689b9b1a9d2dd818037a6a8a084162b2ce77ea98f18ef"
+    },
+    {
+      "name": "organizer_updated1200_images_part03_of_09.zip",
+      "id": "1AiKBzNPYvnq7-mpRw0SQTAz_b0rCWoEz",
+      "group": "datasets",
+      "size": 71677870,
+      "sha256": "cb0e0de3284ee8f591aa42e1f37ef6b17989d7a1a7e23a0df76d2ba2ac35842d"
+    },
+    {
+      "name": "organizer_updated1200_images_part04_of_09.zip",
+      "id": "1hsI8EFV0Y31dKurR8NX8OqwIF0uMxOAG",
+      "group": "datasets",
+      "size": 65418801,
+      "sha256": "707bda1ffa54364bd62019ff336ec3ae2876701b7cd5ebf906e7ba82ec5708f3"
+    },
+    {
+      "name": "organizer_updated1200_images_part05_of_09.zip",
+      "id": "1rrTCOmJ81AI3iEz-LnS9hcG9YUiVH6zc",
+      "group": "datasets",
+      "size": 71969260,
+      "sha256": "88bcb431b11e2f1a8014cb1eed44992c761b24b84a1f16e3bc59e77945a341eb"
+    },
+    {
+      "name": "organizer_updated1200_images_part06_of_09.zip",
+      "id": "1ldP6IsoMZf_R6UfmcCS49Ip6KzjKGLJi",
+      "group": "datasets",
+      "size": 71732351,
+      "sha256": "1435a0e039df8249ec1d2efdf18d92e53c193b5b3d5614f1c7e4a346b78d74ed"
+    },
+    {
+      "name": "organizer_updated1200_images_part07_of_09.zip",
+      "id": "1HIxcvytOm-A1cNDlN0fiSYpzF8u1M4DA",
+      "group": "datasets",
+      "size": 72056812,
+      "sha256": "959403a5e80d84662bdc931a4b16bec8cf045e36c1fab3566c9440661ad5034d"
+    },
+    {
+      "name": "organizer_updated1200_images_part08_of_09.zip",
+      "id": "1icUPQTctids9cL4Xr8T0O6DLD-ggZG7b",
+      "group": "datasets",
+      "size": 71753835,
+      "sha256": "f18f5d2d9be3984a44e40b6096e98fe129a616df6ed05196c2547aea07724bf6"
+    },
+    {
+      "name": "organizer_updated1200_images_part09_of_09.zip",
+      "id": "1H8HVqKa4-OFvYyLNCfoELTB4tpP27B4F",
+      "group": "datasets",
+      "size": 31892322,
+      "sha256": "259987ec8942b6a710407d38a72af8469d64c4a09dd7d9cf8cc8058f1d3b1398"
+    },
+    {
+      "name": "repro_package.tar.part000",
+      "id": "1XdIsOQT87lg0bNt13JSstls7auD3WyNu",
+      "group": "weights",
+      "size": 99614720,
+      "sha256": "a9f8ac9102e16ce54cf8f2d26c4de25079c7c376fd85afab4af337469dcfcb2f"
+    },
+    {
+      "name": "repro_package.tar.part001",
+      "id": "12YjkZ-zGfE7xbqAzOivk7Tqus4Q4X5-t",
+      "group": "weights",
+      "size": 99614720,
+      "sha256": "433b24412c6afe13c40c97f6061e131f197985da42a57c419e0efe67c1e1ac40"
+    },
+    {
+      "name": "repro_package.tar.part002",
+      "id": "1-I6kxbzvkwO_3qsksqd7tvcUpdsM1XO7",
+      "group": "weights",
+      "size": 99614720,
+      "sha256": "b6305c414b1bdddc139aa9d2dac36a12c023a2e01300d07f5a0dbdb66cc628e5"
+    },
+    {
+      "name": "repro_package.tar.part003",
+      "id": "1vcHqiO1xTp0hXWC4TCd7ofFD548kStMx",
+      "group": "weights",
+      "size": 99614720,
+      "sha256": "d3b76d9d664989a5c652b48b0977f48e88a7504773d172eeeb860e0bdff97912"
+    },
+    {
+      "name": "repro_package.tar.part004",
+      "id": "1eM_bbNJbcm49s4uS4pgrabMAEyq4dAZx",
+      "group": "weights",
+      "size": 99614720,
+      "sha256": "0cdebb54292e9b7142406445b1c26b23790030cae9194872be6e9608c6460449"
+    },
+    {
+      "name": "repro_package.tar.part005",
+      "id": "1U5Gm-bEgzzyfhseXqPcVyuxphPaCMmlO",
+      "group": "weights",
+      "size": 99614720,
+      "sha256": "35f73da7025af929c7e4c96b9942ab12fe91def93d4259b05ece4b9691f0e3cd"
+    },
+    {
+      "name": "repro_package.tar.part006",
+      "id": "1pyjKT7TP0qvMJ8ZzxFRVpDhcHWCU1aEF",
+      "group": "weights",
+      "size": 80834560,
+      "sha256": "90e7594d0158d752ceea147a5beef986c1adc1bb43c3cef3fe044b3252f745c5"
+    }
+  ]
+}

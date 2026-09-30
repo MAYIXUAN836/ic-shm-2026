@@ -4,7 +4,7 @@ Final inference code for **Project 3: Apparent Damage Diagnosis of Structures Ba
 
 Given a directory of images, the system recognizes visible structural-damage categories and generates a category-conditioned English description for each image. It exports the competition JSON format, together with JSONL/CSV copies and intermediate audit records.
 
-**For judges:** start with [Quick start](#quick-start), obtain the separate final-adapter bundle, then run `reproduce.sh`. This is a **code-only inference release** of the frozen final system. It does not retrain the models. Model weights, organizer data, and saved competition predictions are delivered separately and are not stored in Git.
+**For judges:** start with [Quick start](#quick-start), run `reproduce.sh setup` to download the final adapters and base models. Run `reproduce.sh datasets` to download the data. This is a **code-only inference release** of the frozen final system. It does not retrain the models. Model weights, organizer data, and saved competition predictions are delivered separately and are not stored in Git.
 
 ## Final system
 
@@ -41,26 +41,28 @@ The runtime versions are recorded in [requirements.txt](requirements.txt). Evalu
 ## Quick start
 
 ```bash
-git clone https://github.com/MAYIXUAN836/ic-shm-2026-damage-recognition-description.git
-cd ic-shm-2026-damage-recognition-description
+git clone https://github.com/MAYIXUAN836/ic-shm-2026.git
+cd ic-shm-2026
 
-# Point to models/adapters/ from the separately supplied final bundle.
-ADAPTERS_SOURCE=/absolute/path/to/repro_package/models/adapters \
-  bash reproduce.sh setup
+# Install the environment and download both base models + four final adapters.
+bash reproduce.sh setup
+
+# Download and extract the complete dataset delivery. No GPU/model loading.
+bash reproduce.sh datasets
 
 # Validate files and adapter SHA-256 hashes without loading any model.
 bash reproduce.sh check
 
 # Run recognition + description. Choose a new or empty output directory.
 bash reproduce.sh run \
-  --input-dir /absolute/path/to/images \
+  --input-dir datasets/official110/image \
   --output-dir outputs/submission \
   --gpu 0
 ```
 
 This repository is private. Judges must be granted GitHub access, or receive the code ZIP directly. Extracting the ZIP gives the same layout and does not require Git.
 
-`setup` installs dependencies, downloads the pinned public base models, copies the final adapter inference artifacts, and checks them. **It never starts training or inference.** Only the explicit `run` action starts inference. If Python 3.12 has another executable name, set `PYTHON=/path/to/python3.12`.
+`setup` installs dependencies, downloads the pinned public base models and seven final-adapter bundle parts from the new Drive folder, verifies every archive hash, restores only the required adapter inference artifacts, and checks them. **It never starts training or inference.** `weights` and `datasets` also only download/verify/extract files. Only the explicit `run` action starts inference. If Python 3.12 has another executable name, set `PYTHON=/path/to/python3.12`.
 
 ### Reuse an existing complete model bundle
 
@@ -87,7 +89,24 @@ Two public base models are downloaded at the exact revisions recorded in the ori
 | [Qwen/Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B) | `c202236235762e1c871ad0ccb60c8ee5ba337b9a` | `models/base/Qwen3.5-9B` |
 | [Qwen/Qwen3-VL-8B-Instruct](https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct) | `0c351dd01ed87e9c1b53cbc748cba10e6187ff3b` | `models/base/Qwen3_VL_8B_Instruct` |
 
-The four trained adapters are **not** the public base models. Obtain the final bundle from the submitting team through the competition delivery channel. The team's existing [resource folder](https://drive.google.com/drive/folders/16huZE_ZjYZgiDI-DT-lD_Q9SlT_A5sK2) contains the separate delivery. The 30 September server delivery record reports public-reader permission and an owner-performed signed-out download check; this code release has not independently repeated that access test. In its `repro_package/` folder, download all seven `repro_package.tar.part000`–`006` files, then restore them with `cat repro_package.tar.part* | tar -xf -` in an empty directory. Set `ADAPTERS_SOURCE` to the restored `repro_package/models/adapters/`. If the folder is inaccessible, request the adapter bundle from the team; the code archive alone is insufficient for inference.
+The four trained adapters are **not** the public base models. They are now hosted in the submission's [Google Drive folder](https://drive.google.com/drive/folders/1FBySNdU_pK20m_GQv7wGNjuMSgcNOT7i):
+
+- [lora_weights/ — seven parts](https://drive.google.com/drive/folders/1Z46YzLCyZ4amLWIys0eqZLnBVaTiRtEH)
+- [datasets/ — 25 ZIP archives](https://drive.google.com/drive/folders/17_JzGThDcx02Bp8NLHd3cfMivXOt5SFE)
+
+The files were copied into the submitting account's folder, rather than linked as shortcuts. Anonymous listing of all 32 files and a sample manifest download/hash check succeeded on 30 September 2026. Google Drive can still impose download quotas; retry later or download through the folder links if necessary.
+
+[config/download_manifest.json](config/download_manifest.json) pins each new Drive file ID, exact byte size, and SHA-256 measured from the authoritative server archives. The script downloads files individually, verifies them before extraction, and reuses already verified files under `downloads/` when rerun. It does not require Drive login/cookies. A failed download is kept as `.partial` and is not accepted as a complete archive.
+
+To download just the trained adapters, without installing PyTorch or downloading base models:
+
+```bash
+bash reproduce.sh weights
+```
+
+The seven parts (`repro_package.tar.part000`–`006`, 678,522,880 bytes total) form an uncompressed tar archive. The bundle also contains historical code/evidence, so the script extracts **only the 20 required adapter files**, leaving this repository's code untouched. It checks the restored adapter hashes and does not load any model. The standalone `weights` and `datasets` actions use a small `.download-venv` if the runtime `.venv` does not yet exist.
+
+Existing local bundles remain supported: `ADAPTERS_SOURCE=/path/to/models/adapters bash reproduce.sh setup` copies the exact required adapter files instead of downloading them. `MODELS_SOURCE=/path/to/models` also skips the public base-model downloads.
 
 Required layout:
 
@@ -142,7 +161,25 @@ The routing/category/normal-description entries in the config document the fixed
 
 ## Data and evaluation
 
-Input images and reference annotations are supplied separately by the competition/team. The existing [dataset resource folder](https://drive.google.com/drive/folders/11gWf6Go-Ie_fqKz6AKAvMs6GSMx6oSXJ) contains the team's dataset delivery location; access is not verified by this code release. Its recorded roles include updated organizer images, official unlabeled inputs, selected DACL10K/MCDS data, normal variants, and split manifests. Use the **updated** organizer data and the matching manifests, not an older copy with the same filenames.
+The complete prepared data delivery is in the new [datasets/ folder](https://drive.google.com/drive/folders/17_JzGThDcx02Bp8NLHd3cfMivXOt5SFE). Run:
+
+```bash
+bash reproduce.sh datasets
+```
+
+This downloads all 25 ZIPs (1,107,570,287 bytes), checks each SHA-256, and extracts their original relative paths under `datasets/`. It does not install or load a model. Allow additional space for both ZIP caches and extracted images. The archive files are flat in Drive; the ZIP contents create the following distinct local roots:
+
+| Local path under `datasets/` | Contents and role |
+| --- | --- |
+| `organizer_updated1200/` | 1,200 updated organizer images; 2,400 description records. Nine image ZIPs plus one description ZIP. |
+| `official110/` | 110 official unlabeled input images and supplied requirements. |
+| `normal54/` | 54 training records/variants from six normal source scenes. Two ZIPs. |
+| `dacl10k/` | 560 selected DACL10K images used in development/training. Eight ZIPs. |
+| `mcds/` | Expert B subset: 72 training and 23 development images. One ZIP. |
+| `mcds_stage1_normal_train35/`, `mcds_stage1_normal16/` | Rejected normal-pilot comparison: 35 candidate train and 16 validation images. These are not final UNIFORM_V1 normal training data. |
+| `manifests/` | Source/role/split records, including the 240 recognition and 116 description-development selections. |
+
+For manual use, download all ZIPs from the new data folder and extract them into one local `datasets/` directory. Do not merge distinct image roots or substitute an older organizer dataset with identical filenames. The 240/120/116 development selections reference the organizer store; their images are not duplicated. Historical paths inside provenance/role manifests describe the source server and are not a requirement for this portable inference runner.
 
 [Evaluation instructions](evaluation/README.md) describe the portable scoring utilities:
 
@@ -159,7 +196,7 @@ The description scorer uses **METEOR without synonym matching**, plus token F1, 
 
 | File | Purpose |
 | --- | --- |
-| `reproduce.sh` | Environment setup, pinned downloads, adapter placement/checking, explicit inference launch |
+| `reproduce.sh` | Environment setup, pinned base-model/Drive downloads, adapter/data extraction and checks, explicit inference launch |
 | `run.py` | Complete image-to-answer pipeline and output validation |
 | `pipeline/stage1_infer.py` | Recognition prompt, final adapter inference, strict category parsing |
 | `pipeline/expert_a_infer.py`, `legacy_runner.py` | Descriptor A's frozen prompt and common expert inference machinery |
@@ -167,8 +204,9 @@ The description scorer uses **METEOR without synonym matching**, plus token F1, 
 | `pipeline/prepare_routes.py`, `combine_b_routes.py` | B route preparation and final adapter-output selection |
 | `pipeline/merge.py` | Category-preserving deterministic description merge |
 | `evaluation/` | Category and description scoring utilities |
-| `config/` | Frozen model configuration and adapter checksums |
+| `config/` | Frozen model configuration, adapter checksums, and new Drive file IDs/archive checksums |
 | `tests/test_pipeline.py` | CPU-only parsing, routing, merge, and input-validation checks |
+| `tests/test_downloads.py` | CPU-only archive extraction, checksum rejection, and download-manifest checks |
 
 The runtime was copied from the final server reproduction package on 30 September 2026. The only portability changes to existing inference code replace two historical absolute default base-model paths with package-relative paths; `run.py` already passes these paths explicitly. No prompts, adapter selection, generation settings, or merge rules were changed.
 
@@ -188,7 +226,7 @@ These checks require no weights or GPU. This release was prepared without loadin
 
 - **Missing adapter/checksum mismatch:** use the four final adapters with their original processor files. A base-model download cannot replace a trained adapter; a historical adapter may have the same filename but different weights.
 - **CUDA out of memory:** stop this run and choose a GPU with sufficient free memory. The release does not change precision, quantize weights, or overwrite other GPU jobs.
-- **Download/access errors:** confirm access to Hugging Face and the team's private resources. The repository contains no account tokens or proxy configuration.
+- **Download/access errors:** confirm access to Hugging Face and the linked Drive resources. The repository contains no account tokens or embedded proxy configuration. Standard `HTTPS_PROXY`/`HTTP_PROXY` environment variables may be used when your network requires them.
 - **Output directory not empty:** choose a new output directory; the full pipeline does not overwrite an existing run.
 - **Evaluation reference mismatch:** use the matching split/reference files and image IDs. Official test labels are not bundled.
 

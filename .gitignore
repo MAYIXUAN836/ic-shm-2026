@@ -15,3 +15,5 @@ datasets/
 *.tar.gz
 .env
 .env.*
+.download-venv/
+downloads/

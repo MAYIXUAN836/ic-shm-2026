@@ -40,6 +40,81 @@ print(f'Model files present; {len(checksums)} final adapter files match SHA-256.
 PY
 }
 
+# Downloads use exact file IDs from the new Drive folder, not a fuzzy folder scrape.
+download_bundle() {
+  "$PYTHON" - "$ROOT" "$1" <<'PY'
+import hashlib, json, shutil, sys, tarfile, tempfile, zipfile
+from pathlib import Path
+import gdown
+
+root, group = Path(sys.argv[1]), sys.argv[2]
+manifest = json.loads((root / 'config/download_manifest.json').read_text())
+files = sorted((r for r in manifest['files'] if r['group'] == group), key=lambda r: r['name'])
+cache = root / 'downloads' / group
+cache.mkdir(parents=True, exist_ok=True)
+
+def digest(path):
+    h = hashlib.sha256()
+    with path.open('rb') as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b''):
+            h.update(chunk)
+    return h.hexdigest()
+
+for row in files:
+    path = cache / row['name']
+    if path.is_file() and path.stat().st_size == row['size'] and digest(path) == row['sha256']:
+        print(f"Verified cached {path.name}", flush=True)
+        continue
+    # Keep a failed download separate from a verified archive.
+    partial = path.with_name(path.name + '.partial')
+    result = gdown.download(id=row['id'], output=str(partial), use_cookies=False)
+    if not result or partial.stat().st_size != row['size'] or digest(partial) != row['sha256']:
+        raise SystemExit(f"Download/checksum failed: {row['name']}. Check access to {manifest['drive_folder']}")
+    partial.replace(path)
+
+if group == 'weights':
+    expected = json.loads((root / 'config/adapter_checksums.json').read_text())
+    # The original seven-part bundle also contains old code/evidence. Restore
+    # only the 20 frozen inference adapter files, never overwrite this repo.
+    with tempfile.TemporaryFile(dir=cache) as combined:
+        for row in files:
+            with (cache / row['name']).open('rb') as part:
+                shutil.copyfileobj(part, combined)
+        combined.seek(0)
+        found = set()
+        with tarfile.open(fileobj=combined, mode='r:') as archive:
+            for member in archive:
+                relative = member.name.removeprefix('./').removeprefix('repro_package/')
+                if relative not in expected:
+                    continue
+                if not member.isfile() or relative in found:
+                    raise SystemExit(f'Invalid or duplicate adapter member: {member.name}')
+                destination = root / relative
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                with archive.extractfile(member) as source, destination.open('wb') as output:
+                    shutil.copyfileobj(source, output)
+                if digest(destination) != expected[relative]:
+                    raise SystemExit(f'Adapter hash mismatch: {relative}')
+                found.add(relative)
+        if found != set(expected):
+            raise SystemExit(f'Missing adapter members: {sorted(set(expected) - found)}')
+    print('Four final adapters restored and verified; no model loaded.')
+else:
+    destination = root / 'datasets'
+    destination.mkdir(exist_ok=True)
+    for row in files:
+        with zipfile.ZipFile(cache / row['name']) as archive:
+            # Archives preserve distinct dataset roots. Reject paths that could
+            # escape the destination, including through existing symlinks.
+            for member in archive.infolist():
+                target = (destination / member.filename).resolve()
+                if not target.is_relative_to(destination.resolve()) or (member.external_attr >> 16) & 0o170000 == 0o120000:
+                    raise SystemExit(f'Unsafe ZIP member: {member.filename}')
+            archive.extractall(destination)
+    print(f'{len(files)} verified dataset archives extracted to {destination}')
+PY
+}
+
 case "$ACTION" in
   setup)
     if [[ "$(uname -s)" != Linux ]]; then
@@ -81,10 +156,23 @@ for relative in json.loads((root / 'config/adapter_checksums.json').read_text())
     dst.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(src, dst)
 PY
+      else
+        download_bundle weights
       fi
     fi
     check_models
     echo 'Setup complete. Run: bash reproduce.sh run --input-dir /path/to/images --output-dir outputs/run1 --gpu 0'
+    ;;
+  weights|datasets)
+    # These actions need only gdown, not PyTorch or a GPU.
+    if [[ -x "$VENV/bin/python" ]]; then
+      PYTHON="$VENV/bin/python"
+    else
+      "$PYTHON" -m venv "$ROOT/.download-venv"
+      PYTHON="$ROOT/.download-venv/bin/python"
+    fi
+    "$PYTHON" -m pip install gdown==5.2.0
+    download_bundle "$ACTION"
     ;;
   check)
     if [[ -x "$VENV/bin/python" ]]; then PYTHON="$VENV/bin/python"; fi
@@ -102,7 +190,9 @@ PY
   help|-h|--help)
     cat <<'HELP'
 Usage:
-  bash reproduce.sh setup        Install Python dependencies and download pinned base models.
+  bash reproduce.sh setup        Install environment, pinned base models, and final adapters from Drive.
+  bash reproduce.sh weights      Download/restore the four trained adapters only (no GPU).
+  bash reproduce.sh datasets     Download/verify/extract all 25 dataset archives (no GPU).
   bash reproduce.sh check        Check model files and final adapter hashes; no model loading.
   bash reproduce.sh run --input-dir IMAGES --output-dir EMPTY_DIR [--gpu 0]
 
@@ -111,8 +201,8 @@ Setup environment variables:
   ADAPTERS_SOURCE=/path/adapters  Copy the four final adapters from the supplied model bundle.
   MODELS_SOURCE=/path/models     Link an existing complete models/ bundle; skip model downloads.
 
-The private final adapters are supplied separately. No training or inference is
-started by setup/check. See README.md for the precise directory layout.
+Final adapters and datasets are downloaded from the submission Drive folder.
+No training or inference is started by setup/weights/datasets/check. See README.md for the precise directory layout.
 HELP
     ;;
   *) echo "Unknown action: $ACTION (use --help)" >&2; exit 2 ;;
